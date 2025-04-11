@@ -1,7 +1,5 @@
 FROM ubuntu:18.04
 
-COPY entrypoint.sh /entrypoint.sh
-
 # baseline dependencies for all versions
 RUN apt update && apt install -y software-properties-common lsb-release \
     sudo wget curl build-essential jq autoconf automake \
@@ -32,12 +30,14 @@ ENV npm_config_arch=x64
 #
 # See https://github.com/nodejs/unofficial-builds/ for more information on these versions.
 #
-RUN curl -sL 'https://unofficial-builds.nodejs.org/download/release/v20.11.1/node-v20.11.1-linux-x64-glibc-217.tar.xz' | xzcat | tar -vx  --strip-components=1 -C /usr/local/
+RUN curl -sL 'https://unofficial-builds.nodejs.org/download/release/v20.18.0/node-v20.18.0-linux-x64-glibc-217.tar.xz' | xzcat | tar -vx  --strip-components=1 -C /usr/local/
 RUN npm install --global yarn
 
 # install new enough git to work with repository
 RUN add-apt-repository ppa:git-core/ppa -y
 RUN apt update && apt install -y git
 RUN git --version
+
+COPY entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
