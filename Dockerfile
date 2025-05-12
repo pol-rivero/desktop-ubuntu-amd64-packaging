@@ -1,4 +1,6 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
+
+ARG DEBIAN_FRONTEND=noninteractive
 
 # baseline dependencies for all versions
 RUN apt update && apt install -y software-properties-common lsb-release \
